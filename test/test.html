@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="http://localhost:5000/api/user/login" method="POST">
+        <input type="text" id="email" name="email" placeholder="email">
+        <input type="text" id="password" name="password" placeholder="password">
+        <button type="submit">submit</button>
+    </form>
+    <br>
+
+    <form action="http://localhost:4000/api/product/add" method="POST">
+        <input type="text" id="name" name="name" placeholder="name">
+        <input type="text" id="price" name="price" placeholder="price">
+        <button type="submit">submit</button>
+    </form>
+    <br>
+    <form action="http://localhost:4000/api/product/filter" method="GET">
+        <input type="text" id="name" name="name" placeholder="name">
+        <button type="submit">submit</button>
+    </form>
+<script>
+fetch('http://localhost:5000/api/user/login',{
+    method: 'post',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        email : 'super@gmail.com',
+        password : 'a'
+    })
+  })
+.then(result=>result.json())
+.then(user=>{
+    console.log(user.token)
+    auth(user.token)
+})
+
+function auth(token){
+    fetch('http://localhost:5000/auth',{
+    method: 'post',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+       token : token
+    })
+  })
+    .then(result=>result.json())
+    .then(user=>{
+         console.log(user)
+    })
+}
+
+</script>
+</body>
+</html>
